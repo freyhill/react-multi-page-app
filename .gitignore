@@ -2,7 +2,7 @@
 .DS_Store
 node_modules
 dist
-
+.lock.json
 # Logs
 logs
 *.log
