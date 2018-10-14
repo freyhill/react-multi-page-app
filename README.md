@@ -1,8 +1,6 @@
 # webpack4+react16多页面架构
-> webpack在单页面打包上应用广泛，以create-react-app为首的脚手架众多，单页面打包通常是将业务js，css打包到同一个html文件中，整个项目只有一个html文件入口,但也有许多业务需要多个页面不同的入口，比如不同的h5活动，或者需要支持seo的官方网站，都需要多个不同的html，webpck-react-muitl架构让你可以在多页面在项目开发中保证每个页面都可以热更新并且打包后有清晰的文件层次结构。
-
+> webpack在单页面打包上应用广泛，以create-react-app为首的脚手架众多，单页面打包通常是将业务js，css打包到同一个html文件中，整个项目只有一个html文件入口,但也有许多业务需要多个页面不同的入口，比如不同的h5活动，或者需要支持seo的官方网站，都需要多个不同的html，webpack-react-multi-page架构让你可以实现多页面架构，在项目开发中保证每个页面都可以热更新并且打包后有清晰的文件层次结构。
 ## 安装使用
-
 ```
 // clone
 git clone git@github.com:leinov/webpack-react-multi-page.git
@@ -19,9 +17,8 @@ npm run build
 // 启动生产页面
 npm start
 ```
-
 ## 项目架构
-#### 技术使用
+### 技术使用
 * ```react16```
 * ```webpack4```
     * ```html-webpack-plugin 生成html文件```
@@ -36,9 +33,9 @@ npm start
     * ```express```
 * ```git```
 
-#### 目录结构
+### 目录结构[github](https://github.com/leinov/webpack-react-multi-page)
 ```
-|-- webpack-react-multi-pages //项目
+|-- webpack-react-multi-page //项目
     |-- dist //编译生产目录
         |-- index
             |-- index.css
@@ -53,19 +50,19 @@ npm start
     |-- src //开发目录
         |-- index //index页面打包入口
             |-- images/
-            |-- app.js// 业务js
-            |-- index.sass
-            |-- index.js //页面js入口
+            |-- app.js// index业务js
+            |-- index.scss
+            |-- index.js //index页面js入口
         |-- about //about页面打包入口
             |-- images/
-            |-- app.js// 业务js
-            |-- about.sass
-            |-- about.js //页面js入口
+            |-- app.js// about业务js
+            |-- index.scss
+            |-- index.js //about页面js入口
         |-- template.html // html模板
-        |-- style.sass //公共sass
+        |-- style.scss //公共scss
     |-- webpackConfig //在webpack中使用
         |-- getEntry.js //获取入口
-        |-- getFilepath.js //src下需要打包页面文件夹
+        |-- getFilepath.js //遍历文件夹
         |-- htmlconfig.js //每个页面html注入数据
     |-- package.json
     |-- .gitignore
@@ -79,25 +76,24 @@ npm start
 webpack.config.js
 ```
 module.exports = (env, argv) => ({
-  entry: ".src/index.js",
-	output: {
-		path: path.join(__dirname, "dist"),
-		filename: "bundle.js"
+    entry: ".src/index.js",
+    output: {
+        path: path.join(__dirname, "dist"),
+        filename: "bundle.js"
 	},
-	module: {
-		rules: [
-		...
-		],
-	},
-	plugins: [
-	    new HtmlWebpackPlugin({
-    		title: "首页",
-    		filename:"index.html",
-    		favicon:"",
-    		template: "./src/template.html",
-
-	    })
-	]
+    module: {
+        rules: [
+            ...
+	   ],
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+    	    title: "首页",
+    	    filename:"index.html",
+    	    favicon:"",
+    	    template: "./src/template.html",
+        })
+    ]
 });
 ```
 这样就可以在```dist```文件夹下打包出一个下面这样的文件
@@ -105,12 +101,12 @@ module.exports = (env, argv) => ({
 ```
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+    <head>
     <title>首页</title>
-  <body>
-    <div id="root"></div>
-    <script type="text/javascript" src="bundle.js"></script>
-  </body>
+    <body>
+        <div id="root"></div>
+        <script type="text/javascript" src="bundle.js"></script>
+    </body>
 </html>
 
 ```
@@ -119,10 +115,10 @@ webpack 的entry支持两种种格式
 #### 打包单个文件
 ```
 module.exports = {
-  entry: '.src/file.js',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    entry: '.src/file.js',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js'
   }
 };
 ```
@@ -131,17 +127,17 @@ module.exports = {
 #### 打包出多个文件
 ```
 module.exports = {
-  entry: {
-    index:"./src/index.js",
-    about:"./src/about.js"
-  },
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js' index.js,about.js这两个文件
-  }
+    entry: {
+        index:"./src/index.js",
+        about:"./src/about.js"
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js'
+    }
 };
 ```
-``` 上面在dist下打包出一个于entry属性名对应的```
+``` 上面在dist下打包出两个与entry属性名对应的index.js,about.js这两个文件```
 
 #### 将每个js挂载到相应的html文件上
 这里我们需要用到```html-webpack-plugin```这个webpack插件,每添加一个页面就需要在plugins添加一个new HtmlWebpackPlugin({....})
@@ -154,26 +150,26 @@ module.exports = (env, argv) => ({
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js' index.js,about.js这两个文件
+        filename: '[name].js'
     }
     ....//其他配置
     plugins: [
         new HtmlWebpackPlugin(
             {
-        		filename:"index.html",//生成的index.html
-        		template: "./src/template.html",}) //模板
-        		chunks:["index"]
+        	filename:"index.html",//生成的index.html
+        	template: "./src/template.html",}) //模板
+        	chunks:["index"]
             }),
-		new HtmlWebpackPlugin(
-		    {
-        		filename:"about.html",//生成的index.html
-        		template: "./src/template.html",}) //模板
-        		chunks:["index"]
-        	})
+	new HtmlWebpackPlugin(
+            {
+                filename:"about.html",//生成的index.html
+        	template: "./src/template.html",}) //模板
+        	chunks:["about"]
+            })
 	]
 })
 ```
-> ```html-webpack-plugin```会通过```template.html```模板生成对应的filename名的html文件，并一并打包到output中对应的文件夹下，注意，在没有特殊配置的情况下所有打包的文件都是对应到output中```path```这个目录下，也包括html。这里的```chunks```需要注意，它是确定该html需要引入哪个js，如果没写的话，默认会引出所有打包的js，当然这不是我们想要的。
+> ```html-webpack-plugin```会通过```template.html```模板生成对应的filename名的html文件，并一并打包到output中对应的文件夹下，注意，所有打包的文件都是对应到output中```path```这个目录下，也包括html。这里的```chunks```需要注意，它是确定该html需要引入哪个js，如果没写的话，默认会引出所有打包的js，当然这不是我们想要的。
 
 上面的配置最终可以在dist下打包出下面的文件结构
 ```
@@ -183,10 +179,10 @@ module.exports = (env, argv) => ({
     |-- index.html //内挂载index.js
     |-- about.html //内挂载about.js
 ```
-通过上面这样的配置，再加上devServer，我们已经可以实现多页面的配置开发了，但这样很不智能，因为你每增加一个页面，就要在wepback里面配置一次，会非常繁琐，所以我们来优化下，让我们只专注于开发页面，配置交给webpack自己.
+通过上面这样的配置，再加上devServer，我们已经可以实现多页面的配置开发了，但这样很不智能，因为你每增加一个页面，就要在wepback里面配置一次，会非常繁琐，所以我们来优化下，让我们只专注于开发页面，配置交给webpack.
 
 #### webpack多页面配置优化
-我们在看下src下面的文件结构
+我们看下src下面的文件结构
 ```
 |-- src
     |-- index
@@ -203,7 +199,7 @@ src下面每个文件夹对应一个html页面的js业务，如果我们直接�
 ```
 /* eslint-env node */
 /**
- * @file: 获取entry文件入口
+ * @project: 获取entry文件入口
  * @author: leinov
  * @date: 2018-10-11
  */
@@ -213,26 +209,26 @@ const fs = require("fs");
  * 【获取entry文件入口】
  *
  * @param {String} path 路径
- * @returns {Object} 返回的entry { "about/about":"./src/about/about.js",...}
+ * @returns {Object} 返回的entry { "about/aoubt":"./src/about/about.js",...}
  */
 module.exports = function getEnty(path){
-	let entry = {};
-	let existpath = fs.existsSync(path); //是否存在目录
-	if(existpath){
-		let readdirSync = fs.readdirSync(path);  //获取目录下所有文件
-		readdirSync.map((item)=>{
-			let currentPath = `${path}/${item}`;
-			let isDirector = fs.statSync(currentPath).isDirectory(); //判断是否是一个文件夹
-			if(isDirector && item !== "component"){
-			    /**
-           * 下面输出格式类似为{"about/about":".src/aobout/index.js"}
-           * 这样目的是为了将js打包到对应的文件夹下
-           */
-				entry[`${item}/${item}`] = `${currentPath}/index.js`;
-			}
-		});
-		return entry;
-	}
+    let entry = {};
+    let existpath = fs.existsSync(path); //是否存在目录
+    if(existpath){
+	let readdirSync = fs.readdirSync(path);  //获取目录下所有文件
+	readdirSync.map((item)=>{
+	    let currentPath = `${path}/${item}`;
+	    let isDirector = fs.statSync(currentPath).isDirectory(); //判断是否是一个文件夹
+	    if(isDirector && item !== "component"){
+		/**
+                 * 下面输出格式为{"about/about":".src/aobout/index.js"}
+                 * 这样目的是为了将js打包到对应的文件夹下
+                 */
+		 entry[`${item}/${item}`] = `${currentPath}/index.js`;
+	    }
+	});
+	return entry;
+    }
 };
 
 ```
@@ -242,7 +238,7 @@ const getEntry = require("./webpackConfig/getEntry");
 const entry = getEntry();
 
 module.exports = (env, argv) => ({
-	entry: entry,
+    entry: entry,
 })
 
 ```
@@ -269,23 +265,23 @@ const fs = require("fs");
  * @returns {Array} ["about","index"]
  */
 module.exports = function getFilePath(path){
-	let arr = [];
-	let existpath = fs.existsSync(path); //是否存在目录
-	if(existpath){
-		let readdirSync = fs.readdirSync(path);  //获取目录下所有文件
-		readdirSync.map((item)=>{
-			let currentPath = path + "/" + item;
-			let isDirector = fs.statSync(currentPath).isDirectory(); //判断是不是一个文件夹
-			if(isDirector){
-				arr.push(item);
-			}
-		});
-		return arr;
-	}
+    let arr = [];
+    let existpath = fs.existsSync(path); //是否存在目录
+    if(existpath){
+	let readdirSync = fs.readdirSync(path);  //获取目录下所有文件
+	readdirSync.map((item)=>{
+	    let currentPath = path + "/" + item;
+	    let isDirector = fs.statSync(currentPath).isDirectory(); //判断是不是一个文件夹
+	    if(isDirector){
+		arr.push(item);
+	    }
+	});
+        return arr;
+    }
 };
 
 ```
-##### htmlconfig.js
+* htmlconfig.js
 ```
 /**
  * @project 页面html配置
@@ -294,19 +290,18 @@ module.exports = function getFilePath(path){
  */
 
 module.exports={
-	index:{
-		title: "首页",//网站标题
-		filename:"index.html",
-		template: "./src/template.html",  
-		chunks:["index/index"],
-
-	},
-	about:{
-		title: "关于页面",//网站标题
-		filename:"about.html",
-		template: "./src/template.html",
-		chunks:["about/about"]
-	}
+    index:{
+        title: "首页",//网站标题
+	filename:"index.html",
+	template: "./src/template.html",  
+        chunks:["index/index"],
+    },
+    about:{
+	title: "关于页面",//网站标题
+	filename:"about.html",
+        template: "./src/template.html",
+	chunks:["about/about"]
+    }
 };
 
 ```
@@ -333,12 +328,12 @@ module.exports = (env, argv) => ({
     }
     ....//其他配置
     devServer: {
-		port: 3100,
-		open: true,
-	},
+	port: 3100,
+	open: true,
+    },
     plugins: [
         ...htmlarr
-	]
+    ]
 })
 ```
-这样一个完整的多页面架构配置就完成了，完整代码参考项目code
+这样一个完整的多页面架构配置就完成了，完整代码参考项目[code](https://github.com/leinov/webpack-react-multi-page)
