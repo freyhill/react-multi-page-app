@@ -23,7 +23,7 @@ module.exports = function getFilePath(path){
 			let currentPath = path + "/" + item;
 			let isDirector = fs.statSync(currentPath).isDirectory(); //判断是不是一个文件夹
 			if(isDirector){
-				fileArr.push(item);
+				arr.push(item);
 			}
 		});
 		return arr;

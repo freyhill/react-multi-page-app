@@ -20,7 +20,7 @@ export default class App extends Component {
 				<Nav />
         <div className="index">
 					<img src={indexpic} />
-					<p>这是111首页</p>
+					<p>this is home page</p>
 				</div>
       </div>
     );

@@ -225,9 +225,9 @@ module.exports = function getEnty(path){
 			let isDirector = fs.statSync(currentPath).isDirectory(); //判断是否是一个文件夹
 			if(isDirector && item !== "component"){
 			    /**
-                 * 下面输出格式类似为{"about/about":".src/aobout/index.js"}
-                 * 这样目的是为了将js打包到对应的文件夹下
-                 */
+           * 下面输出格式类似为{"about/about":".src/aobout/index.js"}
+           * 这样目的是为了将js打包到对应的文件夹下
+           */
 				entry[`${item}/${item}`] = `${currentPath}/index.js`;
 			}
 		});

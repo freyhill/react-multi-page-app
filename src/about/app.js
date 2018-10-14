@@ -14,7 +14,7 @@ export default class App extends Component {
   			<Nav />
   			<div className="about">
   				<img src={aboutpic} />
-          <p>这是关111于页</p>
+          <p>and this is about page</p>
         </div>
       </div>
     );
