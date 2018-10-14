@@ -1,11 +1,11 @@
 # webpack4+react16多页面架构
-> webpack在单页面打包上应用广泛，以create-react-app为首的脚手架众多，单页面打包通常指的是将业务js，css打包到同一个html文件中，整个项目只有一个html文件入口,但也有许多业务需要多个页面不同的入口，比如不同的h5活动，或者需要支持seo的官方网站，都需要多个不同的html，webpck-react-muitl架构让你可以在多页面在项目开发中保证每个页面都可以热更新并且打包后有清晰的文件层次结构。
+> webpack在单页面打包上应用广泛，以create-react-app为首的脚手架众多，单页面打包通常是将业务js，css打包到同一个html文件中，整个项目只有一个html文件入口,但也有许多业务需要多个页面不同的入口，比如不同的h5活动，或者需要支持seo的官方网站，都需要多个不同的html，webpck-react-muitl架构让你可以在多页面在项目开发中保证每个页面都可以热更新并且打包后有清晰的文件层次结构。
 
 ## 安装使用
 
 ```
 // clone
-git clone git@gitee.com:quxueche2016/saas_www.git
+git clone git@github.com:leinov/webpack-react-multi-page.git
 
 // 安装依赖包
 npm install
@@ -74,14 +74,12 @@ npm start
 ```
 
 ## wiki
-### webpack打包单页面应用
-webpack在单页面打包上应用广泛，以create-react-app为首的接触脚手架众多，单页面打包通常指的是将业务js，css打包到同一个html文件中，整个项目只有一个html文件入口
 
 ### webpack单页面打包配置
 webpack.config.js
 ```
 module.exports = (env, argv) => ({
-	entry: ".src/index.js",
+  entry: ".src/index.js",
 	output: {
 		path: path.join(__dirname, "dist"),
 		filename: "bundle.js"
@@ -107,11 +105,12 @@ module.exports = (env, argv) => ({
 ```
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+  <head>
     <title>首页</title>
-    <body>
-        <div id="root"></div>
-        <script type="text/javascript" src="bundle.js"></script></body>
+  <body>
+    <div id="root"></div>
+    <script type="text/javascript" src="bundle.js"></script>
+  </body>
 </html>
 
 ```
