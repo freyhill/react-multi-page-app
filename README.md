@@ -200,7 +200,7 @@ module.exports = (env, argv) => ({
         |-- index.js
 ```
 src下面每个文件夹对应一个html页面的js业务，如果我们直接把文件夹对应入口js找到并把他们合并生成对应的entry，那是不是就不用手动写entry了呢，是的
-##### getEntry.js
+* getEntry.js
 ```
 /* eslint-env node */
 /**
@@ -214,7 +214,7 @@ const fs = require("fs");
  * 【获取entry文件入口】
  *
  * @param {String} path 路径
- * @returns {Object} 返回的entry { "about":"./src/about/about.js",...}
+ * @returns {Object} 返回的entry { "about/about":"./src/about/about.js",...}
  */
 module.exports = function getEnty(path){
 	let entry = {};
@@ -225,7 +225,11 @@ module.exports = function getEnty(path){
 			let currentPath = `${path}/${item}`;
 			let isDirector = fs.statSync(currentPath).isDirectory(); //判断是否是一个文件夹
 			if(isDirector && item !== "component"){
-				entry[`${item}`] = `${currentPath}/index.js`;
+			    /**
+                 * 下面输出格式类似为{"about/about":".src/aobout/index.js"}
+                 * 这样目的是为了将js打包到对应的文件夹下
+                 */
+				entry[`${item}/${item}`] = `${currentPath}/index.js`;
 			}
 		});
 		return entry;
@@ -244,3 +248,98 @@ module.exports = (env, argv) => ({
 
 ```
 > 这样我们就自动获取到了entry
+##### html-webpack-plugin配置
+因为每个页面都需要配置一个html，所以我们也通过fs模块获取src下的目录，遍历出对应得html-webpack-plugin中
+* getFilepath.js
+```
+
+/* eslint-env node */
+
+/**
+ * @project: 遍历文件目录
+ * @author: leinov
+ * @date: 2018-10-11
+ */
+
+const fs = require("fs");
+
+/**
+ * 【遍历某文件下的文件目录】
+ *
+ * @param {String} path 路径
+ * @returns {Array} ["about","index"]
+ */
+module.exports = function getFilePath(path){
+	let arr = [];
+	let existpath = fs.existsSync(path); //是否存在目录
+	if(existpath){
+		let readdirSync = fs.readdirSync(path);  //获取目录下所有文件
+		readdirSync.map((item)=>{
+			let currentPath = path + "/" + item;
+			let isDirector = fs.statSync(currentPath).isDirectory(); //判断是不是一个文件夹
+			if(isDirector){
+				arr.push(item);
+			}
+		});
+		return arr;
+	}
+};
+
+```
+##### htmlconfig.js
+```
+/**
+ * @project 页面html配置
+ * @author:leinov
+ * @date: 2018-10-09
+ */
+
+module.exports={
+	index:{
+		title: "首页",//网站标题
+		filename:"index.html",
+		template: "./src/template.html",  
+		chunks:["index/index"],
+
+	},
+	about:{
+		title: "关于页面",//网站标题
+		filename:"about.html",
+		template: "./src/template.html",
+		chunks:["about/about"]
+	}
+};
+
+```
+
+通过上面一系列的封装webpack最终的配置如下
+
+```
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const getEntry = require("./webpackConfig/getEntry");
+const getFilePath = require("./webpackConfig/getFilepath");
+const htmlconfig =require("./webpackConfig/htmlconfig");
+
+const entry = getEntry("./src");
+const htmlarr=[];//注入html模板
+getFilePath("./src").map(pathname => {
+	htmlarr.push(new HtmlWebpackPlugin(htmlconfig[pathname]));
+});
+
+module.exports = (env, argv) => ({
+    entry: entry
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js'
+    }
+    ....//其他配置
+    devServer: {
+		port: 3100,
+		open: true,
+	},
+    plugins: [
+        ...htmlarr
+	]
+})
+```
+这样一个完整的多页面架构配置就完成了，完整代码参考项目code

@@ -15,7 +15,7 @@ const fs = require("fs");
  * @returns {Array} ["about","index"]
  */
 module.exports = function getFilePath(path){
-	let fileArr = [];
+	let arr = [];
 	let existpath = fs.existsSync(path); //是否存在目录
 	if(existpath){
 		let readdirSync = fs.readdirSync(path);  //获取目录下所有文件
@@ -26,6 +26,6 @@ module.exports = function getFilePath(path){
 				fileArr.push(item);
 			}
 		});
-		return fileArr;
+		return arr;
 	}
 };
