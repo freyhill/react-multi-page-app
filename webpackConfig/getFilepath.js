@@ -22,7 +22,7 @@ module.exports = function getFilePath(path){
 		readdirSync.map((item)=>{
 			let currentPath = path + "/" + item;
 			let isDirector = fs.statSync(currentPath).isDirectory(); //判断是不是一个文件夹
-			if(isDirector){
+			if(isDirector && item !== "component"){ // component目录下为组件 需要排除
 				fileArr.push(item);
 			}
 		});

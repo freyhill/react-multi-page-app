@@ -11,17 +11,18 @@ export default class Nav extends Component {
 
 	componentDidMount() {
 
-  }
+	}
 
-  render() {
+	render() {
 
 		return (
-      <div className=" nav">
-        <div className="columns">
-          <div className=""><a href= "index.html">首页</a></div>
-          <div className=""><a href= "about.html">关于我们</a></div>
-        </div>
+			<div className=" nav">
+				<div className="columns">
+					<div className=""><a href= "/">首页</a></div>
+					<div className=""><a href= "about">关于</a></div>
+					<div className=""><a href= "https://github.com/leinov/webpack-react-multi-page/">github</a></div>
+				</div>
 	    </div>
-    );
-  }
+		);
+	}
 }

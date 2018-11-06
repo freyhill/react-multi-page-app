@@ -5,24 +5,24 @@
  */
 
 import React, { Component } from "react";
-import Nav from '../component/nav';
-import indexpic from './images/index.jpg'
+import Nav from "../component/nav";
+import indexpic from "./images/index.jpg";
 export default class App extends Component {
 
 	componentDidMount() {
 
-  }
+	}
 
-  render() {
+	render() {
 
 		return (
-      <div>
+			<div>
 				<Nav />
-        <div className="index">
+				<div className="index">
 					<img src={indexpic} />
-					<p>这是111首页</p>
+					<p>这是首页</p>
 				</div>
-      </div>
-    );
-  }
+			</div>
+		);
+	}
 }
