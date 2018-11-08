@@ -36,7 +36,7 @@ npm run build
 // 启动生产页面
 npm start
 ```
-新创建页面在src下添加文件夹并创建```pageinfo.json``` 然后```npm run dev``` 开发即可
+新创建页面在src下添加文件夹并创建```pageinfo.json``` 然后```npm run dev``` 即可
 ```
 |-- src
     |-- index/
@@ -58,6 +58,7 @@ npm start
     * ```opn 打开浏览器```
     * ```compression 开启gzip压缩```
     * ```express```
+    * ```fs```
 * ```git```
 
 #### 目录结构
