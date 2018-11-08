@@ -205,7 +205,7 @@ module.exports = (env, argv) => ({
 })
 ```
 
-```html-webpack-plugin```会通过```template.html```模板生成对应的filename名的html文件，并一并打包到output中对应的文件夹下，注意，在没有特殊配置的情况下所有打包的文件都是对应到output中```path```这个目录下，也包括html。这里的```chunks```需要注意，它是确定该html需要引入哪个js，如果没写的话，默认会引出所有打包的js，当然这不是我们想要的。
+```html-webpack-plugin``` 会通过 ```template.html``` 模板生成对应的filename名的html文件，并一并打包到output中对应的文件夹下，注意，在没有特殊配置的情况下所有打包的文件都是对应到output中 ```path``` 这个目录下，也包括html。这里的 ```chunks``` 需要注意，它是确定该html需要引入哪个js，如果没写的话，默认会引出所有打包的js，当然这不是我们想要的。
 
 上面的配置最终可以在dist下打包出下面的文件结构
 
