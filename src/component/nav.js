@@ -19,7 +19,7 @@ export default class Nav extends Component {
 			<div className=" nav">
 				<div className="columns">
 					<div className=""><a href= "/">首页</a></div>
-					<div className=""><a href= "about">关于</a></div>
+					<div className=""><a href= "/about">关于</a></div>
 					<div className=""><a href= "https://github.com/leinov/webpack-react-multi-page/">github</a></div>
 				</div>
 	    </div>

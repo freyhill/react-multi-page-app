@@ -67,7 +67,7 @@ module.exports = (env, argv) => ({
 			// 			loader: "file-loader",
 			// 			options: {
 			// 				name: "[name].[ext]?[hash]",
-			// 				outputPath:"images/" //图片打包后路径
+			// 				outputPath: "./images/"
 			// 			}
 			// 		}
 			// 	]
