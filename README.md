@@ -235,13 +235,15 @@ module.exports = (env, argv) => ({
 ```
 
 src下面每个文件夹对应一个html页面的js业务，如果我们直接把文件夹对应入口js找到并把他们合并生成对应的entry，那是不是就不用手动写entry了呢，是的
-##### getFilePath.js 遍历文件
+
+#### 遍历文件目录
 
 ```
+
 /* eslint-env node */
 
 /**
- * @project: 遍历文件目录
+ * @file: getFilePath.js  遍历文件目录
  * @author: leinov
  * @date: 2018-10-11
  */
@@ -273,12 +275,12 @@ module.exports = function getFilePath(path){
 
 比如在src下有index页面项目，about项目 遍历结果为["index","about"];
 
-##### getEntry.js 遍历生成入口
+#### 遍历生成打包入口数组
 
 ```
 /* eslint-env node */
 /**
- * @project: 获取entry文件入口
+ * @file: getEntry.js 获取entry文件入口
  * @author: leinov
  * @date: 2018-10-11
  * @update: 2018-11-04 优化入口方法 调用getFilePath
@@ -313,7 +315,7 @@ module.exports = function getEnty(path){
 }
 ```
 
-在webpack中使用getEntry
+#### 在webpack中使用getEntry
 
 ```
 const getEntry = require("./webpackConfig/getEntry");
@@ -326,11 +328,11 @@ module.exports = (env, argv) => ({
 ```
 这样我们就自动获取到了entry
 
-##### html-webpack-plugin配置
+#### html-webpack-plugin自动配置
 
 因为每个页面都需要配置一个html，而且每个页面的标题，关键字，描述等信息可能不同，所以我们在每个页面文件夹下创建一个pageinfo.json,通过fs模块获取到json里信息再遍历到对应得html-webpack-plugin中生成一个html插件数组。
 
-* index/pageinfo.json
+```index/pageinfo.json```  生成```index.html```页面信息
 
 ```
 {
@@ -339,7 +341,7 @@ module.exports = (env, argv) => ({
 }
 ```
 
-* about/pageinfo.json
+```about/pageinfo.json``` 生成```about.html```页面信息供
 
 ```
 {
@@ -350,10 +352,10 @@ module.exports = (env, argv) => ({
 
 通过fs遍历读取并生成HtmlWebpackPlugin数组供webpack使用
 
-* htmlconfig.js
+#### 遍历html插件数组
 ```
 /**
- * @file 页面html配置
+ * @file htmlconfig.js  页面html配置
  * @author:leinov
  * @date: 2018-10-09
  * @update: 2018-11-05
@@ -393,7 +395,7 @@ getFilePath("./src").map((item)=>{
 module.exports = htmlArr;
 ```
 
-通过上面一系列的封装webpack最终的配置如下
+#### wbpack终极配置
 
 ```
 const path = require("path");
