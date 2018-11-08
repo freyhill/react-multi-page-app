@@ -1,11 +1,11 @@
 # webpack4+react16多页面架构
 > webpack在单页面打包上应用广泛，以create-react-app为首的脚手架众多，单页面打包通常指的是将业务js，css打包到同一个html文件中，整个项目只有一个html文件入口,但也有许多业务需要多个页面不同的入口，比如不同的h5活动，或者需要支持seo的官方网站，都需要多个不同的html，webpck-react-muitl架构让你可以在多页面在项目开发中保证每个页面都可以热更新并且打包后有清晰的文件层次结构。
 
-## 安装使用
+## 安装&使用
 
 ```
 // clone
-git clone git@gitee.com:quxueche2016/saas_www.git
+git clone git@github.com:leinov/webpack-react-multi-page.git
 
 // 安装依赖包
 npm install
@@ -19,7 +19,14 @@ npm run build
 // 启动生产页面
 npm start
 ```
-
+新创建页面在src下添加文件夹并创建```pageinfo.json``` 然后```npm run dev``` 开发即可
+```
+|-- src
+    |-- index/
+    |-- page2/
+        |-- index.js
+        |-- pageinfo.json
+```
 ## 项目架构
 #### 技术使用
 * ```react16```
@@ -53,12 +60,14 @@ npm start
     |-- src //开发目录
         |-- index //index页面打包入口
             |-- images/
-            |-- app.js// 业务js
+            |-- js
+                |-- app.js// 业务js
             |-- index.sass
             |-- index.js //页面js入口
         |-- about //about页面打包入口
             |-- images/
-            |-- app.js// 业务js
+                |--js
+                    |-- app.js// 业务js
             |-- about.sass
             |-- about.js //页面js入口
         |-- template.html // html模板
@@ -186,7 +195,7 @@ module.exports = (env, argv) => ({
 ```
 通过上面这样的配置，再加上devServer，我们已经可以实现多页面的配置开发了，但这样很不智能，因为你每增加一个页面，就要在wepback里面配置一次，会非常繁琐，所以我们来优化下，让我们只专注于开发页面，配置交给webpack自己.
 
-#### webpack多页面配置优化
+### webpack多页面配置优化
 我们在看下src下面的文件结构
 ```
 |-- src
@@ -200,38 +209,77 @@ module.exports = (env, argv) => ({
         |-- index.js
 ```
 src下面每个文件夹对应一个html页面的js业务，如果我们直接把文件夹对应入口js找到并把他们合并生成对应的entry，那是不是就不用手动写entry了呢，是的
-##### getEntry.js
+##### getFilePath.js 遍历文件
 ```
 /* eslint-env node */
+
 /**
- * @file: 获取entry文件入口
+ * @project: 遍历文件目录
  * @author: leinov
  * @date: 2018-10-11
  */
+
 const fs = require("fs");
 
 /**
- * 【获取entry文件入口】
+ * 【遍历某文件下的文件目录】
  *
  * @param {String} path 路径
- * @returns {Object} 返回的entry { "about":"./src/about/about.js",...}
+ * @returns {Array} ["about","index"]
  */
-module.exports = function getEnty(path){
-	let entry = {};
+module.exports = function getFilePath(path){
+	let fileArr = [];
 	let existpath = fs.existsSync(path); //是否存在目录
 	if(existpath){
 		let readdirSync = fs.readdirSync(path);  //获取目录下所有文件
 		readdirSync.map((item)=>{
-			let currentPath = `${path}/${item}`;
-			let isDirector = fs.statSync(currentPath).isDirectory(); //判断是否是一个文件夹
-			if(isDirector && item !== "component"){
-				entry[`${item}`] = `${currentPath}/index.js`;
+			let currentPath = path + "/" + item;
+			let isDirector = fs.statSync(currentPath).isDirectory(); //判断是不是一个文件夹
+			if(isDirector && item !== "component"){ // component目录下为组件 需要排除
+				fileArr.push(item);
 			}
 		});
-		return entry;
+		return fileArr;
 	}
 };
 
+```
+> 比如在src下有index页面项目，about项目 遍历结果为["index","about"];
+##### getEntry.js 遍历生成入口
+```
+/* eslint-env node */
+/**
+ * @project: 获取entry文件入口
+ * @author: leinov
+ * @date: 2018-10-11
+ * @update: 2018-11-04 优化入口方法 调用getFilePath
+ */
+const getFilePath = require("./getFilepath");
+/**
+ * 【获取entry文件入口】
+ *
+ * @param {String} path 引入根路径
+ * @returns {Object} 返回的entry { "about/aoubt":"./src/about/about.js",...}
+ */
+module.exports = function getEnty(path){
+	let entry = {};
+	getFilePath(path).map((item)=>{
+		/**
+		 * 下面输出格式为{"about/about":"./src/aobout/index.js"}
+		 * 这样目的是为了将js打包到对应的文件夹下
+		 */
+		entry[`${item}/${item}`] = `${path}/${item}/index.js`;
+	});
+	return entry;
+};
+
+```
+> 这里我们使用getFilepath获取的数组，在获取到每个目录下的js文件，组合成一个js入口文件的如下格式的对象。
+```
+{
+    "index/index":"./src/index/index.js",
+    "about/about":"./src/about/index.js"
+}
 ```
 在webpack中使用getEntry
 ```
@@ -244,3 +292,99 @@ module.exports = (env, argv) => ({
 
 ```
 > 这样我们就自动获取到了entry
+
+##### html-webpack-plugin配置
+因为每个页面都需要配置一个html，而且每个页面的标题，关键字，描述等信息可能不同，所以我们在每个页面文件夹下创建一个pageinfo.json,通过fs模块获取到json里信息再遍历到对应得html-webpack-plugin中生成一个html插件数组。
+* index/pageinfo.json
+```
+{
+    "title":"首页",
+     "keywords":"webpack多页面"
+}
+```
+* about/pageinfo.json
+```
+{
+    "title":"关于页面",
+    "keywords":"webpack多页面关于页面"
+}
+```
+通过fs遍历读取并生成HtmlWebpackPlugin数组供webpack使用
+```
+/**
+ * @file 页面html配置
+ * @author:leinov
+ * @date: 2018-10-09
+ * @update: 2018-11-05
+ * @use: 动态配置html页面，获取src下每个文件下的pageinfo.json内容,解析到HtmlWebpackPlugin中
+ */
+
+const fs = require("fs");
+const HtmlWebpackPlugin = require("html-webpack-plugin");//生成html文件
+const getFilePath = require("./getFilepath");
+let htmlArr = [];
+
+getFilePath("./src").map((item)=>{
+	let infoJson ={},infoData={};
+	try{
+		// 读取pageinfo.json文件内容，如果在页面目录下没有找到pageinfo.json 捕获异常
+		infoJson = fs.readFileSync(`src/${item}/pageinfo.json`,"utf-8");//
+		infoData = JSON.parse(infoJson);
+	}catch(err){
+		infoData = {};
+	}
+	htmlArr.push(new HtmlWebpackPlugin({
+		title:infoData.title ? infoData.title : "webpack,react多页面架构",
+		meta:{
+			keywords: infoData.keywords ? infoData.keywords : "webpack，react，github",
+			description:infoData.description ? infoData.description : "这是一个webpack，react多页面架构"
+		},
+		chunks:[`${item}/${item}`], //引入的js
+		template: "./src/template.html",
+		filename : item == "index" ? "index.html" : `${item}/index.html`, //html位置
+		minify:{//压缩html
+			collapseWhitespace: true,
+			preserveLineBreaks: true
+		},
+	}));
+});
+
+module.exports = htmlArr;
+
+```
+通过上面一系列的封装webpack最终的配置如下
+```
+const path = require("path");
+const htmlArr =require("./webpackConfig/htmlConfig");// html配置
+const getEntry = require("./webpackConfig/getEntry"); //入口配置
+const entry = getEntry("./src");
+
+module.exports = (env, argv) => ({
+    entry: entry
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js'
+    }
+    ....//其他配置
+    devServer: {
+	port: 3100,
+	open: true,
+    },
+    plugins: [
+        ...htmlArr
+    ]
+})
+```
+这样一个自动化完整的多页面架构配置就完成了，如果我们要新创建一个页面
+* 1. 在src下创建一个文件目录
+* 2. 在新创建的文件目录下添加```index.js```（必须，因为是webpack打包入口文件）
+* 3. 在新创建文件夹下添加```pageinfo.json```（非必须） 供html插件使用
+* 4. ```npm run dev```开发
+完整代码参考项目[code](https://github.com/leinov/webpack-react-multi-page)
+
+## 版本
+
+版本 | 日期| 分支|备注
+---|---|--|--|--|
+2.0 | 2018-10-08|```master```|优化html插件
+1.0 | 2018-10-07|```version1.0```| [第一版本&wiki](https://github.com/leinov/webpack-react-multi-page/tree/version1.0)
