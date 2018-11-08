@@ -15,7 +15,7 @@ const fs = require("fs");
  * @returns {Array} ["about","index"]
  */
 module.exports = function getFilePath(path){
-	let fileArr = [];
+	let arr = [];
 	let existpath = fs.existsSync(path); //是否存在目录
 	if(existpath){
 		let readdirSync = fs.readdirSync(path);  //获取目录下所有文件
@@ -23,9 +23,9 @@ module.exports = function getFilePath(path){
 			let currentPath = path + "/" + item;
 			let isDirector = fs.statSync(currentPath).isDirectory(); //判断是不是一个文件夹
 			if(isDirector && item !== "component"){ // component目录下为组件 需要排除
-				fileArr.push(item);
+				arr.push(item);
 			}
 		});
-		return fileArr;
+		return arr;
 	}
 };
