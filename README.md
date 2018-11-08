@@ -154,9 +154,10 @@ module.exports = {
   }
 };
 ```
-```在dist下打包出一个bundle.js```
+这样就会在dist下打包出一个bundle.js
 
 #### 打包出多个文件
+
 ```
 module.exports = {
   entry: {
@@ -169,10 +170,12 @@ module.exports = {
   }
 };
 ```
-``` 上面在dist下打包出一个于entry属性名对应的```
+上面在dist下打包出两个与entry属性名对应的js文件
 
 #### 将每个js挂载到相应的html文件上
-这里我们需要用到```html-webpack-plugin```这个webpack插件,每添加一个页面就需要在plugins添加一个new HtmlWebpackPlugin({....})
+
+这里我们需要用到```html-webpack-plugin```这个webpack插件,每添加一个页面就需要在plugins添加一个```new HtmlWebpackPlugin({....})```
+
 ```
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = (env, argv) => ({
@@ -201,20 +204,24 @@ module.exports = (env, argv) => ({
 	]
 })
 ```
-> ```html-webpack-plugin```会通过```template.html```模板生成对应的filename名的html文件，并一并打包到output中对应的文件夹下，注意，在没有特殊配置的情况下所有打包的文件都是对应到output中```path```这个目录下，也包括html。这里的```chunks```需要注意，它是确定该html需要引入哪个js，如果没写的话，默认会引出所有打包的js，当然这不是我们想要的。
+
+ ```html-webpack-plugin```会通过```template.html```模板生成对应的filename名的html文件，并一并打包到output中对应的文件夹下，注意，在没有特殊配置的情况下所有打包的文件都是对应到output中```path```这个目录下，也包括html。这里的```chunks```需要注意，它是确定该html需要引入哪个js，如果没写的话，默认会引出所有打包的js，当然这不是我们想要的。
 
 上面的配置最终可以在dist下打包出下面的文件结构
 ```
+
 |-- dist
     |-- index.js
     |-- about.js
     |-- index.html //内挂载index.js
     |-- about.html //内挂载about.js
 ```
+
 通过上面这样的配置，再加上devServer，我们已经可以实现多页面的配置开发了，但这样很不智能，因为你每增加一个页面，就要在wepback里面配置一次，会非常繁琐，所以我们来优化下，让我们只专注于开发页面，配置交给webpack自己.
 
 ### webpack多页面配置优化
-我们在看下src下面的文件结构
+
+我们再看下src下面的文件结构
 ```
 |-- src
     |-- index
@@ -226,8 +233,10 @@ module.exports = (env, argv) => ({
         |-- index.scss
         |-- index.js
 ```
+
 src下面每个文件夹对应一个html页面的js业务，如果我们直接把文件夹对应入口js找到并把他们合并生成对应的entry，那是不是就不用手动写entry了呢，是的
 ##### getFilePath.js 遍历文件
+
 ```
 /* eslint-env node */
 
@@ -260,10 +269,12 @@ module.exports = function getFilePath(path){
 		return fileArr;
 	}
 };
-
 ```
-> 比如在src下有index页面项目，about项目 遍历结果为["index","about"];
+
+比如在src下有index页面项目，about项目 遍历结果为["index","about"];
+
 ##### getEntry.js 遍历生成入口
+
 ```
 /* eslint-env node */
 /**
@@ -292,14 +303,18 @@ module.exports = function getEnty(path){
 };
 
 ```
-> 这里我们使用getFilepath获取的数组，在获取到每个目录下的js文件，组合成一个js入口文件的如下格式的对象。
+
+这里我们使用getFilepath获取的数组，在获取到每个目录下的js文件，组合成一个js入口文件的如下格式的对象。
+
 ```
 {
     "index/index":"./src/index/index.js",
     "about/about":"./src/about/index.js"
 }
 ```
+
 在webpack中使用getEntry
+
 ```
 const getEntry = require("./webpackConfig/getEntry");
 const entry = getEntry();
@@ -309,25 +324,33 @@ module.exports = (env, argv) => ({
 })
 
 ```
-> 这样我们就自动获取到了entry
+这样我们就自动获取到了entry
 
 ##### html-webpack-plugin配置
+
 因为每个页面都需要配置一个html，而且每个页面的标题，关键字，描述等信息可能不同，所以我们在每个页面文件夹下创建一个pageinfo.json,通过fs模块获取到json里信息再遍历到对应得html-webpack-plugin中生成一个html插件数组。
+
 * index/pageinfo.json
+
 ```
 {
     "title":"首页",
      "keywords":"webpack多页面"
 }
 ```
+
 * about/pageinfo.json
+
 ```
 {
     "title":"关于页面",
     "keywords":"webpack多页面关于页面"
 }
 ```
+
 通过fs遍历读取并生成HtmlWebpackPlugin数组供webpack使用
+
+* htmlconfig.js
 ```
 /**
  * @file 页面html配置
@@ -368,9 +391,10 @@ getFilePath("./src").map((item)=>{
 });
 
 module.exports = htmlArr;
-
 ```
+
 通过上面一系列的封装webpack最终的配置如下
+
 ```
 const path = require("path");
 const htmlArr =require("./webpackConfig/htmlConfig");// html配置
@@ -393,7 +417,9 @@ module.exports = (env, argv) => ({
     ]
 })
 ```
+
 这样一个自动化完整的多页面架构配置就完成了，如果我们要新创建一个页面
+
 * 1. 在src下创建一个文件目录
 * 2. 在新创建的文件目录下添加```index.js```（必须，因为是webpack打包入口文件）
 * 3. 在新创建文件夹下添加```pageinfo.json```（非必须） 供html插件使用
