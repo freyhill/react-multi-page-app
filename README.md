@@ -205,11 +205,11 @@ module.exports = (env, argv) => ({
 })
 ```
 
- ```html-webpack-plugin```会通过```template.html```模板生成对应的filename名的html文件，并一并打包到output中对应的文件夹下，注意，在没有特殊配置的情况下所有打包的文件都是对应到output中```path```这个目录下，也包括html。这里的```chunks```需要注意，它是确定该html需要引入哪个js，如果没写的话，默认会引出所有打包的js，当然这不是我们想要的。
+```html-webpack-plugin```会通过```template.html```模板生成对应的filename名的html文件，并一并打包到output中对应的文件夹下，注意，在没有特殊配置的情况下所有打包的文件都是对应到output中```path```这个目录下，也包括html。这里的```chunks```需要注意，它是确定该html需要引入哪个js，如果没写的话，默认会引出所有打包的js，当然这不是我们想要的。
 
 上面的配置最终可以在dist下打包出下面的文件结构
-```
 
+```
 |-- dist
     |-- index.js
     |-- about.js
@@ -222,6 +222,7 @@ module.exports = (env, argv) => ({
 ### webpack多页面配置优化
 
 我们再看下src下面的文件结构
+
 ```
 |-- src
     |-- index
@@ -234,12 +235,11 @@ module.exports = (env, argv) => ({
         |-- index.js
 ```
 
-src下面每个文件夹对应一个html页面的js业务，如果我们直接把文件夹对应入口js找到并把他们合并生成对应的entry，那是不是就不用手动写entry了呢，是的
+src下面每个文件夹对应一个html页面的js业务，如果我们直接把文件夹对应入口js找到并把他们合并生成对应的entry，那是不是就不用手动写entry了呢，是的!
 
 #### 遍历文件目录
 
 ```
-
 /* eslint-env node */
 
 /**
@@ -303,7 +303,6 @@ module.exports = function getEnty(path){
 	});
 	return entry;
 };
-
 ```
 
 这里我们使用getFilepath获取的数组，在获取到每个目录下的js文件，组合成一个js入口文件的如下格式的对象。
@@ -326,6 +325,7 @@ module.exports = (env, argv) => ({
 })
 
 ```
+
 这样我们就自动获取到了entry
 
 #### html-webpack-plugin自动配置
@@ -353,6 +353,7 @@ module.exports = (env, argv) => ({
 通过fs遍历读取并生成HtmlWebpackPlugin数组供webpack使用
 
 #### 遍历html插件数组
+
 ```
 /**
  * @file htmlconfig.js  页面html配置
@@ -399,9 +400,9 @@ module.exports = htmlArr;
 
 ```
 const path = require("path");
-const htmlArr =require("./webpackConfig/htmlConfig");// html配置
 const getEntry = require("./webpackConfig/getEntry"); //入口配置
 const entry = getEntry("./src");
+const htmlArr =require("./webpackConfig/htmlConfig");// html配置
 
 module.exports = (env, argv) => ({
     entry: entry
@@ -432,5 +433,5 @@ module.exports = (env, argv) => ({
 
 |版本 | 日期 | 分支 | 备注
 |:--:|:--:|:--:|:--:|
-2.0 | 2018-10-08|```master```|优化html插件
-1.0 | 2018-10-07|```version1.0```| [第一版本&wiki](https://github.com/leinov/webpack-react-multi-page/tree/version1.0)
+[2.0](https://github.com/leinov/webpack-react-multi-page) | 2018-10-08|```master```|优化html插件
+[1.0](https://github.com/leinov/webpack-react-multi-page/tree/version1.0) | 2018-10-07|```version1.0```| 第一版
