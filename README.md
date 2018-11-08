@@ -433,5 +433,5 @@ module.exports = (env, argv) => ({
 
 |版本 | 日期 | 分支 | 备注
 |:--:|:--:|:--:|:--:|
-[2.0](https://github.com/leinov/webpack-react-multi-page) | 2018-10-08|```master```|优化html插件
+[2.0](https://github.com/leinov/webpack-react-multi-page) | 2018-11-08|```master```|优化html插件自动化
 [1.0](https://github.com/leinov/webpack-react-multi-page/tree/version1.0) | 2018-10-07|```version1.0```| 第一版
