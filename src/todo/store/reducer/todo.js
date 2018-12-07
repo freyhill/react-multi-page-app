@@ -1,4 +1,4 @@
-import {ADD_TODO, TOGGLE_TODO} from "../action/todoAction";
+import {ADD_TODO, TOGGLE_TODO,DELET_TODO} from "../action/todoAction";
 let initState=[];
 const todos = (state = initState, action) => {
 	console.log(state);
@@ -20,6 +20,8 @@ const todos = (state = initState, action) => {
 			
 			return todo;
 		});
+	case DELET_TODO:
+		return action.newdata;
 	default:
 		return state;
 	}

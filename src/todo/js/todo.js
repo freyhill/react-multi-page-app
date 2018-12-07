@@ -3,15 +3,10 @@ import React from "react";
 class Todo extends React.Component {
 	render() {
 		return (
-			<li
-				onClick = {this.props.onClick}
-				style = {{
-					textDecoration: this.props.completed ? "line-through" : "none",
-					cursor: this.props.completed ? "default" : "pointer",
-					color: this.props.completed ? "#f00" : "#000"
-				}}
-			>
-				{this.props.text}
+			<li className="todo-item flex v-center">
+				<span className={`${this.props.todoItem.completed ? "todo-checked" :""} todo-checkbox `} onClick={this.props.onClick}></span>	
+				<span className={`${this.props.todoItem.completed ? "todo-true" :"todo-false"} flex1 toto-text` }>{this.props.todoItem.text}</span>
+				<span className={`${this.props.todoItem.completed ? "todo-true" :"todo-false"}  toto-text v-center` } onClick={this.props.onDeleteClick}><i className="fa fa-trash-alt delete-todo"></i></span>
 			</li>
 		);
 	}

@@ -21,13 +21,13 @@ class Filter extends React.Component {
 	render() {
 		return (
 			<div>
-                请选择:
+                options:
 				{" "}
-				{this.renderFilter(visibilityType.SHOW_ALL, "All")}
+				{this.renderFilter(visibilityType.SHOW_ALL, "all")}
 				{" ,"}
-				{this.renderFilter(visibilityType.SHOW_COMPLETED, "completed")}
+				{this.renderFilter(visibilityType.SHOW_COMPLETED, "accomplish")}
 				{" ,"}
-				{this.renderFilter(visibilityType.SHOW_ACTIVE, "active")}
+				{this.renderFilter(visibilityType.SHOW_ACTIVE, "unfinished")}
 			</div>
 		);
 	}
