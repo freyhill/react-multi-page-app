@@ -32,7 +32,11 @@ module.exports = (env, argv) => ({
 				use: {
 					loader:"babel-loader",
 					options:{
-						presets: ["@babel/preset-env", "@babel/preset-react"]
+						presets: [
+							"@babel/preset-env",
+							"@babel/preset-react",
+							{"plugins": ["@babel/plugin-proposal-class-properties"]} //这句很重要 不然箭头函数出错
+						], 
 					}
 				},
 			},
