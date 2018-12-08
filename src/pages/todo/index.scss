@@ -12,6 +12,9 @@
       padding:10px 0;
       border-bottom: 1px solid #f1f1f1;
     }
+    .todo-item:nth-last-child(1){
+      border-bottom: none;
+    }
   }
   .todo-checkbox{
     width: 18px;

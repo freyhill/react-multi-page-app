@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import "./nav.scss";
-import logo from "src/pages/index/images/react-multi.png"
+import logo from "src/pages/react-multi.png"
 export default class Nav extends Component {
 
 	render() {

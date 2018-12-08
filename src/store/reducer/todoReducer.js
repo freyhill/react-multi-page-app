@@ -4,7 +4,11 @@ import {
 	DELET_TODO
 } from "../actionTypes";
 let id  = 0;
-let initState = [];
+let initState = [{
+	text:"coding",
+	id:0,
+	completed: false,
+}];
 
 const todoList = (state = initState, action) => {
 	console.log("state",state);

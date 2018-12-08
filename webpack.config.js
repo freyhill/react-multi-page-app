@@ -56,30 +56,13 @@ module.exports = (env, argv) => ({
 				exclude: /node_modules/,
 			},
 			{
-				test: /\.(png|jpg)$/,
-				exclude: /node_modules/,
-				use:[
-					{
-						loader: "url-loader",
-						options: {
-							name: "./images/[name].[ext]",
-							limit: 8192
-						}
-					}
-				]
-			},
-			// {
-			// 	test: /\.(png|jpg|woff|woff2|eot|ttf|svg)$/,
-			// 	use:[
-			// 		{
-			// 			loader: "file-loader",
-			// 			options: {
-			// 				name: "[name].[ext]?[hash]",
-			// 				outputPath: "./images/"
-			// 			}
-			// 		}
-			// 	]
-			// },
+                test: /\.(png|jpg)$/,
+                loader: 'url-loader?limit=8192&name=images/[hash:8].[name].[ext]',
+                options:{
+                    publicPath:'/'
+                }
+            },
+		 
 		],
 	},
 	devServer: {
