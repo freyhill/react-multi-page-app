@@ -1,5 +1,5 @@
 import React from "react";
-import Todo from "./todo";
+import TodoItem from "./todo-item";
  
 class TodoList extends React.Component {
 	onToggleClick = (index)=>{
@@ -9,18 +9,18 @@ class TodoList extends React.Component {
 		this.props.deleteTodo(index);
 	}
 	render() {
-		const todoList = this.props.todos.map((item,index)=>{
+		const todoList = this.props.todoList.map((item,index)=>{
 			 return (
-				 <Todo 
+				 <TodoItem 
 					key = {index} 
 					todoItem={item} 
-					onClick = {this.onToggleClick.bind(this,index)}
-					onDeleteClick={this.onDeleteClick.bind(this,index)}
+					onClick = {this.onToggleClick.bind(this,item.id)}
+					onDeleteClick={this.onDeleteClick.bind(this,item.id)}
 				 />
 			 );
 		});
 		return (
-			<ul className={`${this.props.todos.length<1?"":"list-shadow"} todo-list`}>
+			<ul className={`${this.props.todoList.length<1?"":"list-shadow"} todo-list`}>
 				{todoList}
 			</ul>
 		);

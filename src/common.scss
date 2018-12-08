@@ -1,19 +1,17 @@
 @import "../node_modules/bulma/bulma.sass";
 .flex{
   display: flex;
+  display: inline-flex;
+  display: -webkit-flex;
 }
 .flex1{
+  -webkit-flex:1;
   flex:1;
 }
 .v-center{
   align-items: center;
-  vertical-align:middle;
 }
-.mt10{
-    margin-top:20px;
-  }
 .main{
   width: 80%;
-  
   margin:auto;
 }

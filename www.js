@@ -18,7 +18,7 @@ var compression = require("compression");
 app.use(compression());
 
 //静态页面路径
-app.use(express.static("./dist"));
+app.use(express.static("./build"));
 app.set("port", port);
 
 //启动server

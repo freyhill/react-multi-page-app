@@ -13,15 +13,16 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");//css分离打包
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");//js压缩
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin"); //css压缩
-const htmlArr =require("./webpackConfig/htmlConfig");// html配置
-const getEntry = require("./webpackConfig/getEntry");
-let entry = getEntry("./src");
+const createHtml =require("./config/create-html");// html配置
+const getEntry = require("./config/get-entry");
+const entry = getEntry("./src/pages");
+const htmlArr = createHtml("./src/pages");
 
 //主配置
 module.exports = (env, argv) => ({
 	entry: entry,
 	output: {
-		path: path.join(__dirname, "dist"),
+		path: path.join(__dirname, "build"),
 		filename: "[name].js"
 	},
 	module: {
@@ -43,6 +44,7 @@ module.exports = (env, argv) => ({
 			{
 				test: /\.css$/,
 				use: ["style-loader", "css-loader"],
+				exclude: /node_modules/,
 			},
 			{
 				test: /\.(scss|css)$/, //css打包 路径在plugins里
@@ -50,10 +52,12 @@ module.exports = (env, argv) => ({
 					argv.mode == "development" ? { loader: "style-loader"} :MiniCssExtractPlugin.loader,
 					{ loader: "css-loader", options: { url: false, sourceMap: true } },
 					{ loader: "sass-loader", options: { sourceMap: true } }
-				]
+				],
+				exclude: /node_modules/,
 			},
 			{
 				test: /\.(png|jpg)$/,
+				exclude: /node_modules/,
 				use:[
 					{
 						loader: "url-loader",
@@ -81,6 +85,13 @@ module.exports = (env, argv) => ({
 	devServer: {
 		port: 3100,
 		open: true,
+	},
+	resolve:{
+		alias:{
+			src:path.resolve(__dirname,"src/"),
+			component:path.resolve(__dirname,"src/component/"),
+			store:path.resolve(__dirname,"src/store/"),
+		}
 	},
 	plugins: [
 		...htmlArr, // html插件数组

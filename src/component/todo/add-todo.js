@@ -5,7 +5,7 @@ class AddTodo extends React.Component {
 		return (
 			<div>
 				<input 
-					placeholder="input today todolist and press the enter key"
+					placeholder="input today todo list and press the enter key"
 					className="input" 
 					onChange={this.props.onChange} 
 					onKeyDown={this.props.onKeyDown}
@@ -14,4 +14,5 @@ class AddTodo extends React.Component {
 		);
 	}
 }
+
 export default AddTodo;

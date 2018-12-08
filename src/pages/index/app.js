@@ -1,17 +1,13 @@
-/* eslint-disable no-unused-vars */
-/**
- * @project: 主业务逻辑页面
+/********************************
+ * @file: home page
+ * @desc: overview react multi page app
  * @author: leinov
- * @date: 2018-10-08
- */
+ * @date:2018-12-06
+ *******************************/
 
 import React, { Component } from "react";
-import Nav from "../component/nav";
+import Nav from "component/nav";
 export default class App extends Component {
-
-	componentDidMount() {
-
-	}
 	render() {
 		return (
 			<div>

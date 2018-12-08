@@ -1,6 +1,6 @@
 import React from "react";
  
-class Todo extends React.Component {
+class TodoItem extends React.Component {
 	render() {
 		return (
 			<li className="todo-item flex v-center">
@@ -12,4 +12,4 @@ class Todo extends React.Component {
 	}
 }
  
-export default Todo;
+export default TodoItem;

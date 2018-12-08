@@ -3,9 +3,9 @@
  * @project: 获取entry文件入口
  * @author: leinov
  * @date: 2018-10-11
- * @update: 2018-11-04 优化入口方法 调用getFilePath
+ * @update: 2018-11-04 优化入口方法 调用getPath
  */
-const getFilePath = require("./getFilepath");
+const getPath = require("./get-path");
 /**
  * 【获取entry文件入口】
  *
@@ -14,7 +14,8 @@ const getFilePath = require("./getFilepath");
  */
 module.exports = function getEnty(path){
 	let entry = {};
-	getFilePath(path).map((item)=>{
+	getPath(path).map((item)=>{
+		console.log("item",item);
 		/**
 		 * 下面输出格式为{"about/about":".src/aobout/index.js"}
 		 * 这样目的是为了将js打包到对应的文件夹下
