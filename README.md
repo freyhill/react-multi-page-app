@@ -1,6 +1,6 @@
-<div style="text-align:center">
+<div align="center">
     <img width="120px" src="https://raw.githubusercontent.com/leinov/react-multi-page-app/master/react-multi.png" /><br>
-    <div style="text-align:center">
+    <div>
         <img src="https://img.shields.io/github/license/leinov/react-multi-page-app.svg" />&nbsp
         <img src="https://img.shields.io/github/forks/leinov/react-multi-page-app.svg" />&nbsp
         <img src="https://img.shields.io/github/stars/leinov/react-multi-page-app.svg">&nbsp
