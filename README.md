@@ -105,13 +105,13 @@ create a new page in the pages directory of src. and run ```npm run dev``` in th
         |-- pageinfo.json
 ```
 
-## [wiki](https://github.com/leinov/react-multi-page-app/issues/1)
+## [Wiki](https://github.com/leinov/react-multi-page-app/issues/1)
 
 * How to implement
 * How to structure 
 * Use in detail
 
-## version
+## Version
 
 version | desc
 ---|---
