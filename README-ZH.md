@@ -13,9 +13,7 @@
 
 中文 | [English](README.md)
 <br><br>
-webpack在单页面打包上应用广泛，以create-react-app为首的脚手架众多，单页面打包通常指的是将业务js，css打包到同一个html文件中，整个项目只有一个html文件入口,但也有**许多业务需要多个页面不同的入口，比如不同的h5活动，或者需要支持seo的官方网站，都需要多个不同的html**。**webpack-react-multi-page**架构让你可以在多页面在项目开发中**自动化打包新创建页面并保证每个页面都可以热更新** ，build打包后有清晰的文件层次结构。
-
-
+react-multi-page-app是一个基于react和webpack的多页面应用架构，通过编译生成对应目录结构清晰的静态页面,实现多页面便捷开发维护
 
 ## 概览
 
@@ -33,7 +31,7 @@ www.h5cool.com/react-multi-page-app/demo
 
 
 ## 特性
-* 👩‍👩‍👧‍👧 S支持多页面同时热加载开发
+* 👩‍👩‍👧‍👧  支持多页面同时热加载开发
 * 📇 自动识别新创建页面
 * 📝 每个页面生成个性化信息
 * 🚻 分类打包
@@ -65,6 +63,13 @@ $ rppx init my-react
 ```
 $ npm install 
 ```
+
+开发
+
+```
+$ npm run dev
+```
+
 编译
 
 ```
@@ -76,10 +81,12 @@ $ npm run build
 $ npm start
 ```
 
-自动打开浏览器浏览页面 http://localhost:3100 
+自动打开浏览器浏览页面 开发: http://localhost:3100  生产: http://localhost:3118
 
 ## 开发及使用
-在src下添加文件夹并创建 ```pageinfo.json``` 然后 ```npm run dev``` 即可
+
+在 ```src``` 下的 ```pages``` 目录里添加新页面文件夹并创建，在根目录执行 ```npm run dev``` 即可
+
 ```
 |-- src
     |-- index/
@@ -90,9 +97,11 @@ $ npm start
 ```
 
 ## [博客](https://github.com/leinov/react-multi-page-app/issues/1)
+
 * 如何实现
 * 如何架构
 * 详细使用
+
 ## 版本
 
 版本 | 描述
@@ -102,4 +111,5 @@ $ npm start
 1.1.0 | 初始项目
 
 ## License
+
 [MIT](https://opensource.org/licenses/MIT)

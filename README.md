@@ -13,7 +13,7 @@
 
 English | [中文](README-ZH.md)
 <br><br>
-Webpack is widely used for single-page packaging.Scaffolding, led by create-react-app, is numerous.Single-page packaging usually refers to the business js, CSS packaging into the same HTML file, the whole project has only one HTML file entry.However, there are many businesses that require multiple entries to different pages, such as different h5 activities, or official websites that support seo, which require multiple different HTML,The webpack-react-multi-page architecture enables you to automate the packaging of newly created pages on multiple pages during project development and ensures that each page is hot replacement,and the build package has a clear hierarchy of files.
+React-multi-page-app is a multi-page application architecture based on react and webpack. Through compiling and generating static pages with clear corresponding directory structure, multi-page development and maintenance can be realized conveniently.
 
 
 
@@ -29,12 +29,15 @@ version | 1.3.0
 
 
 ## Demo 
+
 www.h5cool.com/react-multi-page-app/demo
+
 * home page - a simple overview page
 * react-redux todo list
 * a link to github
 
 ## Feature
+
 * 👩‍👩‍👧‍👧 Support multiple pages simultaneously hot loading development
 * 📇 Automatically identifies newly created pages
 * 📝 Each page generates personalized information
@@ -42,19 +45,24 @@ www.h5cool.com/react-multi-page-app/demo
 * 🔗 Flexible extend
 
 ## Install
+
 ```
 npm install rppx-cli -g
 
 ```
 
 ## Quick Start
+
 install rppx-cli in global and create your new project ,use npm start the project 
 
 install 
+
 ```
 $ npm install rppx-cli -g
 ```
+
 create your multi page
+
 
 ```
 $ rppx init my-react
@@ -65,6 +73,13 @@ install dependencies
 ```
 $ npm install 
 ```
+
+dev
+
+```
+$ npm run dev
+```
+
 build
 
 ```
@@ -72,14 +87,15 @@ $ npm run build
 ```
 
 start project
+
 ```
 $ npm start
 ```
 
-Automatically open browser with http://localhost:3100 
+Automatically open browser with development: http://localhost:3100 / production: http://localhost:3118 
 
 ## Usage
-create a new page in the src directory. and run ```npm run dev``` in the root directory of project
+create a new page in the pages directory of src. and run ```npm run dev``` in the root directory of project
 ```
 |-- src
     |-- index/
@@ -90,9 +106,11 @@ create a new page in the src directory. and run ```npm run dev``` in the root di
 ```
 
 ## [wiki](https://github.com/leinov/react-multi-page-app/issues/1)
+
 * How to implement
 * How to structure 
 * Use in detail
+
 ## version
 
 version | desc
@@ -102,4 +120,5 @@ version | desc
 1.1.0 | init 
 
 ## License
+
 [MIT](https://opensource.org/licenses/MIT)
