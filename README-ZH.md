@@ -23,16 +23,14 @@ key | value
 ---|---
 名称 | react-multi-page-app
 描述 | 基于react的多页面应用脚手架
-命令 | [rppx-cli]()
+命令 | [rppx-cli](https://github.com/leinov/rppx-cli)
 作者 | leinov
 版本 | 1.3.0
 
 
 ## 网页效果 
 www.h5cool.com/react-multi-page-app/demo
-* 一个概览页面
-* 基于react-redux的todo页面
-* a link to github
+
 
 ## 特性
 * 👩‍👩‍👧‍👧 S支持多页面同时热加载开发

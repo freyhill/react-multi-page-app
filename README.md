@@ -11,7 +11,7 @@
 </div>
 <br>
 
-English | [中文](xx)
+English | [中文](README-ZH.md)
 <br><br>
 Webpack is widely used for single-page packaging.Scaffolding, led by create-react-app, is numerous.Single-page packaging usually refers to the business js, CSS packaging into the same HTML file, the whole project has only one HTML file entry.However, there are many businesses that require multiple entries to different pages, such as different h5 activities, or official websites that support seo, which require multiple different HTML,The webpack-react-multi-page architecture enables you to automate the packaging of newly created pages on multiple pages during project development and ensures that each page is hot replacement,and the build package has a clear hierarchy of files.
 
@@ -23,9 +23,9 @@ key | value
 ---|---
 name | react-multi-page-app
 desc | a scaffold of create react multi page app
-cli | [rppx]()
+cli | [rppx](https://github.com/leinov/rppx-cli)
 author | leinov
-version | 3.0.0
+version | 1.3.0
 
 
 ## Demo 
