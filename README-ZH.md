@@ -91,7 +91,7 @@ $ npm start
         |-- pageinfo.json
 ```
 
-## 博客
+## [博客](https://github.com/leinov/react-multi-page-app/issues/1)
 * 如何实现
 * 如何架构
 * 详细使用
