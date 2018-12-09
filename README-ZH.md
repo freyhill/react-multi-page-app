@@ -1,6 +1,6 @@
-<div style="text-align:center">
+<div align="center">
     <img width="120px" src="https://raw.githubusercontent.com/leinov/react-multi-page-app/master/react-multi.png" /><br>
-    <div style="text-align:center">
+    <div>
         <img src="https://img.shields.io/github/license/leinov/react-multi-page-app.svg" />&nbsp
         <img src="https://img.shields.io/github/forks/leinov/react-multi-page-app.svg" />&nbsp
         <img src="https://img.shields.io/github/stars/leinov/react-multi-page-app.svg">&nbsp
@@ -11,7 +11,7 @@
 </div>
 <br>
 
-中文 | [English](xx)
+中文 | [English](README.md)
 <br><br>
 webpack在单页面打包上应用广泛，以create-react-app为首的脚手架众多，单页面打包通常指的是将业务js，css打包到同一个html文件中，整个项目只有一个html文件入口,但也有**许多业务需要多个页面不同的入口，比如不同的h5活动，或者需要支持seo的官方网站，都需要多个不同的html**。**webpack-react-multi-page**架构让你可以在多页面在项目开发中**自动化打包新创建页面并保证每个页面都可以热更新** ，build打包后有清晰的文件层次结构。
 
@@ -21,14 +21,14 @@ webpack在单页面打包上应用广泛，以create-react-app为首的脚手架
 
 key | value
 ---|---
-name | react-multi-page-app
-desc | 基于react的多页面应用脚手架
-cli | [rppx-cli]()
-author | leinov
-version | 1.3.0
+名称 | react-multi-page-app
+描述 | 基于react的多页面应用脚手架
+命令 | [rppx-cli]()
+作者 | leinov
+版本 | 1.3.0
 
 
-## 网页实例 
+## 网页效果 
 www.h5cool.com/react-multi-page-app/demo
 * 一个概览页面
 * 基于react-redux的todo页面
