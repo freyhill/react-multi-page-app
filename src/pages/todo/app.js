@@ -7,10 +7,12 @@
 
 import React from "react";
 import {connect} from "react-redux";
+import utils from 'src/utils'
 import AddTodo from "component/todo/add-todo";
 import TodoList from "component/todo/todo-list";
 import Filter from "component/todo/filter";
-import utils from 'src/utils'
+import Footer from "component/footer"
+
 import {
 	addTodo, 
 	toggleTodo,
@@ -84,6 +86,7 @@ class App extends React.Component {
 						onFilterChange = {this.onFilterChange}
 					/>
 				</div>
+				<Footer />
 			</div>
 		);
 	}
