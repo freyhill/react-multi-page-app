@@ -1,7 +1,7 @@
 {
   "name": "react-multi-page-app",
   "version": "1.3.0",
-  "description": "eact multi page app ",
+  "description": "react multi page app ",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server  --mode development --devtool inline-source-map --hot",
