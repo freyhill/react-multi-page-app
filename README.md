@@ -28,14 +28,6 @@ author | leinov
 version | 1.3.0
 
 
-## Demo 
-
-www.h5cool.com/react-multi-page-app/demo
-
-* home page - a simple overview page
-* react-redux todo list
-* a link to github
-
 ## Feature
 
 * 👩‍👩‍👧‍👧 Support multiple pages simultaneously hot loading development
