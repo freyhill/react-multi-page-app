@@ -12,7 +12,7 @@ const getPath = require("./get-path");
  * @param {String} path 引入根路径
  * @returns {Object} 返回的entry { "about/aoubt":"./src/about/about.js",...}
  */
-module.exports = function getEnty(path){
+module.exports = function getEntry(path){
 	let entry = {};
 	getPath(path).map((item)=>{
 		/**
